@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.remind.bpf.user.mapper.UserMapper">
+	
+	<resultMap type="User" id="UserResultMap">
+		 <id property="id" column="ID"/>
+ 		 <result property="user_name" column="USER_NAME"/>
+ 		 <result property="login_name" column="LOGIN_NAME"/>
+ 		 <result property="login_diyname" column="LOGIN_DIYNAME"/>
+ 		 <result property="password" column="PASSWORD"/>
+ 		 <result property="email" column="EMAIL"/>
+ 		 <result property="msisdn" column="MSISDN"/>
+ 		 <result property="telphone" column="TELPHONE"/>
+ 		 <result property="def_menu_id" column="DEF_MENU_ID"/>
+ 		 <result property="company_name" column="COMPANY_NAME"/>
+ 		 <result property="prov_code" column="PROV_CODE"/>
+ 		 <result property="city_code" column="CITY_CODE"/>
+ 		 <result property="type" column="TYPE"/>
+ 		 <result property="grade" column="GRADE"/>
+ 		 <result property="locked" column="LOCKED"/>
+ 		 <result property="error_count" column="ERROR_COUNT"/>
+ 		 <result property="login_date" column="LOGIN_DATE"/>
+ 		 <result property="created" column="CREATED"/>
+ 		 <result property="created_by" column="CREATED_BY"/>
+ 		 <result property="status" column="STATUS"/>
+ 		 <result property="last_upd" column="LAST_UPD"/>
+ 		 <result property="last_upd_by" column="LAST_UPD_BY"/>
+ 		 <result property="remarks" column="REMARKS"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="User">
+	 	<selectKey  keyProperty="id" resultType="long" order="BEFORE">
+			<![CDATA[select func_bpf_getseq('WM_USER') as id from dual]]>
+	   </selectKey>
+		<![CDATA[
+			INSERT INTO WM_USER(ID, USER_NAME, LOGIN_NAME, LOGIN_DIYNAME, PASSWORD, EMAIL, MSISDN, TELPHONE, DEF_MENU_ID, COMPANY_NAME, PROV_CODE, CITY_CODE, TYPE, GRADE, LOCKED, ERROR_COUNT, LOGIN_DATE, CREATED, CREATED_BY, STATUS, LAST_UPD, LAST_UPD_BY, REMARKS) 
+			VALUES( #{id,jdbcType=NUMERIC}, #{user_name,jdbcType=VARCHAR}, #{login_name,jdbcType=VARCHAR}, #{login_diyname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{msisdn,jdbcType=VARCHAR}, #{telphone,jdbcType=VARCHAR}, #{def_menu_id,jdbcType=NUMERIC}, #{company_name,jdbcType=VARCHAR}, #{prov_code,jdbcType=NUMERIC}, #{city_code,jdbcType=NUMERIC}, #{type,jdbcType=NUMERIC}, #{grade,jdbcType=NUMERIC}, #{locked,jdbcType=VARCHAR}, #{error_count,jdbcType=NUMERIC}, #{login_date,jdbcType=DATE}, current_date, #{created_by,jdbcType=NUMERIC}, #{status,jdbcType=VARCHAR}, #{last_upd,jdbcType=DATE}, #{last_upd_by,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR} )
+		]]>
+	</insert>
+	
+	<delete id="delete" parameterType="User">
+		 delete from WM_USER
+		 <trim prefix="where" prefixOverrides="AND |OR">  
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="user_name != null">
+				AND USER_NAME = #{user_name}
+			</if>
+			<if test="login_name != null">
+				AND LOGIN_NAME = #{login_name}
+			</if>
+			<if test="login_diyname != null">
+				AND LOGIN_DIYNAME = #{login_diyname}
+			</if>
+			<if test="password != null">
+				AND PASSWORD = #{password}
+			</if>
+			<if test="email != null">
+				AND EMAIL = #{email}
+			</if>
+			<if test="msisdn != null">
+				AND MSISDN = #{msisdn}
+			</if>
+			<if test="telphone != null">
+				AND TELPHONE = #{telphone}
+			</if>
+			<if test="def_menu_id != null">
+				AND DEF_MENU_ID = #{def_menu_id}
+			</if>
+			<if test="company_name != null">
+				AND COMPANY_NAME = #{company_name}
+			</if>
+			<if test="prov_code != null">
+				AND PROV_CODE = #{prov_code}
+			</if>
+			<if test="city_code != null">
+				AND CITY_CODE = #{city_code}
+			</if>
+			<if test="type != null">
+				AND TYPE = #{type}
+			</if>
+			<if test="grade != null">
+				AND GRADE = #{grade}
+			</if>
+			<if test="locked != null">
+				AND LOCKED = #{locked}
+			</if>
+			<if test="error_count != null">
+				AND ERROR_COUNT = #{error_count}
+			</if>
+			<if test="login_date != null">
+				AND LOGIN_DATE = #{login_date}
+			</if>
+			<if test="created != null">
+				AND CREATED = #{created}
+			</if>
+			<if test="created_by != null">
+				AND CREATED_BY = #{created_by}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status}
+			</if>
+			<if test="last_upd != null">
+				AND LAST_UPD = #{last_upd}
+			</if>
+			<if test="last_upd_by != null">
+				AND LAST_UPD_BY = #{last_upd_by}
+			</if>
+			<if test="remarks != null">
+				AND REMARKS = #{remarks}
+			</if>
+		 </trim> 
+	</delete>
+	
+	<delete id="deleteById" parameterType="Long">
+		 delete from WM_USER where id=#{id}  
+	</delete>
+		
+	<update id="updateAll" parameterType="User">
+		<![CDATA[ 
+			UPDATE WM_USER SET LAST_UPD = current_date,
+			ID = #{id}, USER_NAME = #{user_name}, LOGIN_NAME = #{login_name}, LOGIN_DIYNAME = #{login_diyname}, PASSWORD = #{password}, EMAIL = #{email}, MSISDN = #{msisdn}, TELPHONE = #{telphone}, DEF_MENU_ID = #{def_menu_id}, COMPANY_NAME = #{company_name}, PROV_CODE = #{prov_code}, CITY_CODE = #{city_code}, TYPE = #{type}, GRADE = #{grade}, LOCKED = #{locked}, ERROR_COUNT = #{error_count}, LOGIN_DATE = #{login_date}, STATUS = #{status}, LAST_UPD_BY = #{last_upd_by}, REMARKS = #{remarks} 
+			WHERE 1 = 1
+		]]>
+	</update>
+	
+	<update id="updateNotNull" parameterType="User">
+		<![CDATA[ UPDATE WM_USER ]]>
+		<trim prefix="SET" suffixOverrides=",">
+				<if test="id != null">
+					ID = #{id}
+				</if>
+				<if test="user_name != null">
+					USER_NAME = #{user_name}
+				</if>
+				<if test="login_name != null">
+					LOGIN_NAME = #{login_name}
+				</if>
+				<if test="login_diyname != null">
+					LOGIN_DIYNAME = #{login_diyname}
+				</if>
+				<if test="password != null">
+					PASSWORD = #{password}
+				</if>
+				<if test="email != null">
+					EMAIL = #{email}
+				</if>
+				<if test="msisdn != null">
+					MSISDN = #{msisdn}
+				</if>
+				<if test="telphone != null">
+					TELPHONE = #{telphone}
+				</if>
+				<if test="def_menu_id != null">
+					DEF_MENU_ID = #{def_menu_id}
+				</if>
+				<if test="company_name != null">
+					COMPANY_NAME = #{company_name}
+				</if>
+				<if test="prov_code != null">
+					PROV_CODE = #{prov_code}
+				</if>
+				<if test="city_code != null">
+					CITY_CODE = #{city_code}
+				</if>
+				<if test="type != null">
+					TYPE = #{type}
+				</if>
+				<if test="grade != null">
+					GRADE = #{grade}
+				</if>
+				<if test="locked != null">
+					LOCKED = #{locked}
+				</if>
+				<if test="error_count != null">
+					ERROR_COUNT = #{error_count}
+				</if>
+				<if test="login_date != null">
+					LOGIN_DATE = #{login_date}
+				</if>
+				<if test="created != null">
+					CREATED = #{created}
+				</if>
+				<if test="created_by != null">
+					CREATED_BY = #{created_by}
+				</if>
+				<if test="status != null">
+					STATUS = #{status}
+				</if>
+				<if test="last_upd_by != null">
+					LAST_UPD_BY = #{last_upd_by}
+				</if>
+				<if test="remarks != null">
+					REMARKS = #{remarks}
+				</if>
+		</trim>
+		<![CDATA[ WHERE 1 = 1 ]]>
+	</update>
+	
+	
+	<select id="query" resultMap="UserResultMap" parameterType="User">
+		<![CDATA[ SELECT ID, USER_NAME, LOGIN_NAME, LOGIN_DIYNAME, PASSWORD, EMAIL, MSISDN, TELPHONE, DEF_MENU_ID, COMPANY_NAME, PROV_CODE, CITY_CODE, TYPE, GRADE, LOCKED, ERROR_COUNT, LOGIN_DATE, CREATED, CREATED_BY, STATUS, LAST_UPD, LAST_UPD_BY, REMARKS FROM WM_USER]]>
+		 <trim prefix="where" prefixOverrides="AND |OR">  
+			<if test="id != null">
+				<![CDATA[AND ID like CONCAT(CONCAT('%', #{id}),'%')]]>
+			</if>
+			<if test="user_name != null">
+				<![CDATA[AND USER_NAME like CONCAT(CONCAT('%', #{user_name}),'%')]]>
+			</if>
+			<if test="login_name != null">
+				<![CDATA[AND LOGIN_NAME like CONCAT(CONCAT('%', #{login_name}),'%')]]>
+			</if>
+			<if test="login_diyname != null">
+				<![CDATA[AND LOGIN_DIYNAME like CONCAT(CONCAT('%', #{login_diyname}),'%')]]>
+			</if>
+			<if test="password != null">
+				<![CDATA[AND PASSWORD like CONCAT(CONCAT('%', #{password}),'%')]]>
+			</if>
+			<if test="email != null">
+				<![CDATA[AND EMAIL like CONCAT(CONCAT('%', #{email}),'%')]]>
+			</if>
+			<if test="msisdn != null">
+				<![CDATA[AND MSISDN like CONCAT(CONCAT('%', #{msisdn}),'%')]]>
+			</if>
+			<if test="telphone != null">
+				<![CDATA[AND TELPHONE like CONCAT(CONCAT('%', #{telphone}),'%')]]>
+			</if>
+			<if test="def_menu_id != null">
+				<![CDATA[AND DEF_MENU_ID like CONCAT(CONCAT('%', #{def_menu_id}),'%')]]>
+			</if>
+			<if test="company_name != null">
+				<![CDATA[AND COMPANY_NAME like CONCAT(CONCAT('%', #{company_name}),'%')]]>
+			</if>
+			<if test="prov_code != null">
+				<![CDATA[AND PROV_CODE like CONCAT(CONCAT('%', #{prov_code}),'%')]]>
+			</if>
+			<if test="city_code != null">
+				<![CDATA[AND CITY_CODE like CONCAT(CONCAT('%', #{city_code}),'%')]]>
+			</if>
+			<if test="type != null">
+				<![CDATA[AND TYPE like CONCAT(CONCAT('%', #{type}),'%')]]>
+			</if>
+			<if test="grade != null">
+				<![CDATA[AND GRADE like CONCAT(CONCAT('%', #{grade}),'%')]]>
+			</if>
+			<if test="locked != null">
+				<![CDATA[AND LOCKED like CONCAT(CONCAT('%', #{locked}),'%')]]>
+			</if>
+			<if test="error_count != null">
+				<![CDATA[AND ERROR_COUNT like CONCAT(CONCAT('%', #{error_count}),'%')]]>
+			</if>
+			<if test="login_date != null">
+				<![CDATA[AND LOGIN_DATE like CONCAT(CONCAT('%', #{login_date}),'%')]]>
+			</if>
+			<if test="created != null">
+				<![CDATA[AND CREATED like CONCAT(CONCAT('%', #{created}),'%')]]>
+			</if>
+			<if test="created_by != null">
+				<![CDATA[AND CREATED_BY like CONCAT(CONCAT('%', #{created_by}),'%')]]>
+			</if>
+			<if test="status != null">
+				<![CDATA[AND STATUS like CONCAT(CONCAT('%', #{status}),'%')]]>
+			</if>
+			<if test="last_upd != null">
+				<![CDATA[AND LAST_UPD like CONCAT(CONCAT('%', #{last_upd}),'%')]]>
+			</if>
+			<if test="last_upd_by != null">
+				<![CDATA[AND LAST_UPD_BY like CONCAT(CONCAT('%', #{last_upd_by}),'%')]]>
+			</if>
+			<if test="remarks != null">
+				<![CDATA[AND REMARKS like CONCAT(CONCAT('%', #{remarks}),'%')]]>
+			</if>
+		 </trim> 
+	</select>
+	
+	<select id="queryListPage" resultMap="UserResultMap" parameterType="Page">
+		select * from WM_USER
+	</select>
+    
+</mapper>

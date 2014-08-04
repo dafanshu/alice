@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cms.balance.mapper.CmsBalanceSheetInfoMapper">
+	
+	<resultMap type="CmsBalanceSheetInfo" id="CmsBalanceSheetInfoResultMap">
+		 		 <result property="resourceid" column="RESOURCEID"/>
+ 		 <result property="bs_number" column="BS_NUMBER"/>
+ 		 <result property="bs_date" column="BS_DATE"/>
+ 		 <result property="bs_amount" column="BS_AMOUNT"/>
+ 		 <result property="creator" column="CREATOR"/>
+ 		 <result property="creator_id" column="CREATOR_ID"/>
+ 		 <result property="create_org_info" column="CREATE_ORG_INFO"/>
+ 		 <result property="create_company" column="CREATE_COMPANY"/>
+ 		 <result property="create_company_id" column="CREATE_COMPANY_ID"/>
+ 		 <result property="create_departmet" column="CREATE_DEPARTMET"/>
+ 		 <result property="create_departmet_id" column="CREATE_DEPARTMET_ID"/>
+ 		 <result property="create_date" column="CREATE_DATE"/>
+ 		 <result property="modify_date" column="MODIFY_DATE"/>
+ 		 <result property="modifyor" column="MODIFYOR"/>
+ 		 <result property="contract_id" column="CONTRACT_ID"/>
+ 		 <result property="contract_num" column="CONTRACT_NUM"/>
+ 		 <result property="contract_name" column="CONTRACT_NAME"/>
+ 		 <result property="mark" column="MARK"/>
+ 		 <result property="data_type" column="DATA_TYPE"/>
+ 		 <result property="isupload" column="ISUPLOAD"/>
+ 		 <result property="flgdelete" column="FLGDELETE"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="CmsBalanceSheetInfo">
+	 	<selectKey  keyProperty="id" resultType="long" order="BEFORE">
+			<![CDATA[select func_bpf_getseq('CMS_BALANCE_SHEET_INFO') as id from dual]]>
+	   </selectKey>
+		<![CDATA[
+			INSERT INTO CMS_BALANCE_SHEET_INFO(RESOURCEID, BS_NUMBER, BS_DATE, BS_AMOUNT, CREATOR, CREATOR_ID, CREATE_ORG_INFO, CREATE_COMPANY, CREATE_COMPANY_ID, CREATE_DEPARTMET, CREATE_DEPARTMET_ID, CREATE_DATE, MODIFY_DATE, MODIFYOR, CONTRACT_ID, CONTRACT_NUM, CONTRACT_NAME, MARK, DATA_TYPE, ISUPLOAD, FLGDELETE) 
+			VALUES( #{resourceid,jdbcType=VARCHAR}, #{bs_number,jdbcType=VARCHAR}, #{bs_date,jdbcType=VARCHAR}, #{bs_amount,jdbcType=NUMERIC}, #{creator,jdbcType=VARCHAR}, #{creator_id,jdbcType=VARCHAR}, #{create_org_info,jdbcType=VARCHAR}, #{create_company,jdbcType=VARCHAR}, #{create_company_id,jdbcType=VARCHAR}, #{create_departmet,jdbcType=VARCHAR}, #{create_departmet_id,jdbcType=VARCHAR}, #{create_date,jdbcType=DATE}, #{modify_date,jdbcType=DATE}, #{modifyor,jdbcType=VARCHAR}, #{contract_id,jdbcType=VARCHAR}, #{contract_num,jdbcType=VARCHAR}, #{contract_name,jdbcType=VARCHAR}, #{mark,jdbcType=VARCHAR}, #{data_type,jdbcType=VARCHAR}, #{isupload,jdbcType=VARCHAR}, #{flgdelete,jdbcType=VARCHAR} )
+		]]>
+	</insert>
+	
+	<delete id="delete" parameterType="CmsBalanceSheetInfo">
+		 delete from CMS_BALANCE_SHEET_INFO
+		 <trim prefix="where" prefixOverrides="AND |OR">  
+			<if test="resourceid != null">
+				AND RESOURCEID = #{resourceid}
+			</if>
+			<if test="bs_number != null">
+				AND BS_NUMBER = #{bs_number}
+			</if>
+			<if test="bs_date != null">
+				AND BS_DATE = #{bs_date}
+			</if>
+			<if test="bs_amount != null">
+				AND BS_AMOUNT = #{bs_amount}
+			</if>
+			<if test="creator != null">
+				AND CREATOR = #{creator}
+			</if>
+			<if test="creator_id != null">
+				AND CREATOR_ID = #{creator_id}
+			</if>
+			<if test="create_org_info != null">
+				AND CREATE_ORG_INFO = #{create_org_info}
+			</if>
+			<if test="create_company != null">
+				AND CREATE_COMPANY = #{create_company}
+			</if>
+			<if test="create_company_id != null">
+				AND CREATE_COMPANY_ID = #{create_company_id}
+			</if>
+			<if test="create_departmet != null">
+				AND CREATE_DEPARTMET = #{create_departmet}
+			</if>
+			<if test="create_departmet_id != null">
+				AND CREATE_DEPARTMET_ID = #{create_departmet_id}
+			</if>
+			<if test="create_date != null">
+				AND CREATE_DATE = #{create_date}
+			</if>
+			<if test="modify_date != null">
+				AND MODIFY_DATE = #{modify_date}
+			</if>
+			<if test="modifyor != null">
+				AND MODIFYOR = #{modifyor}
+			</if>
+			<if test="contract_id != null">
+				AND CONTRACT_ID = #{contract_id}
+			</if>
+			<if test="contract_num != null">
+				AND CONTRACT_NUM = #{contract_num}
+			</if>
+			<if test="contract_name != null">
+				AND CONTRACT_NAME = #{contract_name}
+			</if>
+			<if test="mark != null">
+				AND MARK = #{mark}
+			</if>
+			<if test="data_type != null">
+				AND DATA_TYPE = #{data_type}
+			</if>
+			<if test="isupload != null">
+				AND ISUPLOAD = #{isupload}
+			</if>
+			<if test="flgdelete != null">
+				AND FLGDELETE = #{flgdelete}
+			</if>
+		 </trim> 
+	</delete>
+	
+	<delete id="deleteById" parameterType="Long">
+		 delete from CMS_BALANCE_SHEET_INFO where id=#{id}  
+	</delete>
+		
+	<update id="updateAll" parameterType="CmsBalanceSheetInfo">
+		<![CDATA[ 
+			UPDATE CMS_BALANCE_SHEET_INFO SET LAST_UPD = current_date,
+			RESOURCEID = #{resourceid}, BS_NUMBER = #{bs_number}, BS_DATE = #{bs_date}, BS_AMOUNT = #{bs_amount}, CREATOR = #{creator}, CREATOR_ID = #{creator_id}, CREATE_ORG_INFO = #{create_org_info}, CREATE_COMPANY = #{create_company}, CREATE_COMPANY_ID = #{create_company_id}, CREATE_DEPARTMET = #{create_departmet}, CREATE_DEPARTMET_ID = #{create_departmet_id}, CREATE_DATE = #{create_date}, MODIFY_DATE = #{modify_date}, MODIFYOR = #{modifyor}, CONTRACT_ID = #{contract_id}, CONTRACT_NUM = #{contract_num}, CONTRACT_NAME = #{contract_name}, MARK = #{mark}, DATA_TYPE = #{data_type}, ISUPLOAD = #{isupload}, FLGDELETE = #{flgdelete} 
+			WHERE 1 = 1
+		]]>
+	</update>
+	
+	<update id="updateNotNull" parameterType="CmsBalanceSheetInfo">
+		<![CDATA[ UPDATE CMS_BALANCE_SHEET_INFO ]]>
+		<trim prefix="SET" suffixOverrides=",">
+				<if test="resourceid != null">
+					RESOURCEID = #{resourceid}
+				</if>
+				<if test="bs_number != null">
+					BS_NUMBER = #{bs_number}
+				</if>
+				<if test="bs_date != null">
+					BS_DATE = #{bs_date}
+				</if>
+				<if test="bs_amount != null">
+					BS_AMOUNT = #{bs_amount}
+				</if>
+				<if test="creator != null">
+					CREATOR = #{creator}
+				</if>
+				<if test="creator_id != null">
+					CREATOR_ID = #{creator_id}
+				</if>
+				<if test="create_org_info != null">
+					CREATE_ORG_INFO = #{create_org_info}
+				</if>
+				<if test="create_company != null">
+					CREATE_COMPANY = #{create_company}
+				</if>
+				<if test="create_company_id != null">
+					CREATE_COMPANY_ID = #{create_company_id}
+				</if>
+				<if test="create_departmet != null">
+					CREATE_DEPARTMET = #{create_departmet}
+				</if>
+				<if test="create_departmet_id != null">
+					CREATE_DEPARTMET_ID = #{create_departmet_id}
+				</if>
+				<if test="create_date != null">
+					CREATE_DATE = #{create_date}
+				</if>
+				<if test="modify_date != null">
+					MODIFY_DATE = #{modify_date}
+				</if>
+				<if test="modifyor != null">
+					MODIFYOR = #{modifyor}
+				</if>
+				<if test="contract_id != null">
+					CONTRACT_ID = #{contract_id}
+				</if>
+				<if test="contract_num != null">
+					CONTRACT_NUM = #{contract_num}
+				</if>
+				<if test="contract_name != null">
+					CONTRACT_NAME = #{contract_name}
+				</if>
+				<if test="mark != null">
+					MARK = #{mark}
+				</if>
+				<if test="data_type != null">
+					DATA_TYPE = #{data_type}
+				</if>
+				<if test="isupload != null">
+					ISUPLOAD = #{isupload}
+				</if>
+				<if test="flgdelete != null">
+					FLGDELETE = #{flgdelete}
+				</if>
+		</trim>
+		<![CDATA[ WHERE 1 = 1 ]]>
+	</update>
+	
+	
+	<select id="query" resultMap="CmsBalanceSheetInfoResultMap" parameterType="CmsBalanceSheetInfo">
+		<![CDATA[ SELECT RESOURCEID, BS_NUMBER, BS_DATE, BS_AMOUNT, CREATOR, CREATOR_ID, CREATE_ORG_INFO, CREATE_COMPANY, CREATE_COMPANY_ID, CREATE_DEPARTMET, CREATE_DEPARTMET_ID, CREATE_DATE, MODIFY_DATE, MODIFYOR, CONTRACT_ID, CONTRACT_NUM, CONTRACT_NAME, MARK, DATA_TYPE, ISUPLOAD, FLGDELETE FROM CMS_BALANCE_SHEET_INFO]]>
+		 <trim prefix="where" prefixOverrides="AND |OR">  
+			<if test="resourceid != null">
+				<![CDATA[AND RESOURCEID like CONCAT(CONCAT('%', #{resourceid}),'%')]]>
+			</if>
+			<if test="bs_number != null">
+				<![CDATA[AND BS_NUMBER like CONCAT(CONCAT('%', #{bs_number}),'%')]]>
+			</if>
+			<if test="bs_date != null">
+				<![CDATA[AND BS_DATE like CONCAT(CONCAT('%', #{bs_date}),'%')]]>
+			</if>
+			<if test="bs_amount != null">
+				<![CDATA[AND BS_AMOUNT like CONCAT(CONCAT('%', #{bs_amount}),'%')]]>
+			</if>
+			<if test="creator != null">
+				<![CDATA[AND CREATOR like CONCAT(CONCAT('%', #{creator}),'%')]]>
+			</if>
+			<if test="creator_id != null">
+				<![CDATA[AND CREATOR_ID like CONCAT(CONCAT('%', #{creator_id}),'%')]]>
+			</if>
+			<if test="create_org_info != null">
+				<![CDATA[AND CREATE_ORG_INFO like CONCAT(CONCAT('%', #{create_org_info}),'%')]]>
+			</if>
+			<if test="create_company != null">
+				<![CDATA[AND CREATE_COMPANY like CONCAT(CONCAT('%', #{create_company}),'%')]]>
+			</if>
+			<if test="create_company_id != null">
+				<![CDATA[AND CREATE_COMPANY_ID like CONCAT(CONCAT('%', #{create_company_id}),'%')]]>
+			</if>
+			<if test="create_departmet != null">
+				<![CDATA[AND CREATE_DEPARTMET like CONCAT(CONCAT('%', #{create_departmet}),'%')]]>
+			</if>
+			<if test="create_departmet_id != null">
+				<![CDATA[AND CREATE_DEPARTMET_ID like CONCAT(CONCAT('%', #{create_departmet_id}),'%')]]>
+			</if>
+			<if test="create_date != null">
+				<![CDATA[AND CREATE_DATE like CONCAT(CONCAT('%', #{create_date}),'%')]]>
+			</if>
+			<if test="modify_date != null">
+				<![CDATA[AND MODIFY_DATE like CONCAT(CONCAT('%', #{modify_date}),'%')]]>
+			</if>
+			<if test="modifyor != null">
+				<![CDATA[AND MODIFYOR like CONCAT(CONCAT('%', #{modifyor}),'%')]]>
+			</if>
+			<if test="contract_id != null">
+				<![CDATA[AND CONTRACT_ID like CONCAT(CONCAT('%', #{contract_id}),'%')]]>
+			</if>
+			<if test="contract_num != null">
+				<![CDATA[AND CONTRACT_NUM like CONCAT(CONCAT('%', #{contract_num}),'%')]]>
+			</if>
+			<if test="contract_name != null">
+				<![CDATA[AND CONTRACT_NAME like CONCAT(CONCAT('%', #{contract_name}),'%')]]>
+			</if>
+			<if test="mark != null">
+				<![CDATA[AND MARK like CONCAT(CONCAT('%', #{mark}),'%')]]>
+			</if>
+			<if test="data_type != null">
+				<![CDATA[AND DATA_TYPE like CONCAT(CONCAT('%', #{data_type}),'%')]]>
+			</if>
+			<if test="isupload != null">
+				<![CDATA[AND ISUPLOAD like CONCAT(CONCAT('%', #{isupload}),'%')]]>
+			</if>
+			<if test="flgdelete != null">
+				<![CDATA[AND FLGDELETE like CONCAT(CONCAT('%', #{flgdelete}),'%')]]>
+			</if>
+		 </trim> 
+	</select>
+    
+    <select id="queryListPage" resultMap="CmsBalanceSheetInfoResultMap" parameterType="CmsBalanceSheetInfo">
+		<![CDATA[ SELECT RESOURCEID, BS_NUMBER, BS_DATE, BS_AMOUNT, CREATOR, CREATOR_ID, CREATE_ORG_INFO, CREATE_COMPANY, CREATE_COMPANY_ID, CREATE_DEPARTMET, CREATE_DEPARTMET_ID, CREATE_DATE, MODIFY_DATE, MODIFYOR, CONTRACT_ID, CONTRACT_NUM, CONTRACT_NAME, MARK, DATA_TYPE, ISUPLOAD, FLGDELETE FROM CMS_BALANCE_SHEET_INFO]]>
+		 <trim prefix="where" prefixOverrides="AND |OR">  
+			<if test="resourceid != null">
+				<![CDATA[AND RESOURCEID like CONCAT(CONCAT('%', #{resourceid}),'%')]]>
+			</if>
+			<if test="bs_number != null">
+				<![CDATA[AND BS_NUMBER like CONCAT(CONCAT('%', #{bs_number}),'%')]]>
+			</if>
+			<if test="bs_date != null">
+				<![CDATA[AND BS_DATE like CONCAT(CONCAT('%', #{bs_date}),'%')]]>
+			</if>
+			<if test="bs_amount != null">
+				<![CDATA[AND BS_AMOUNT like CONCAT(CONCAT('%', #{bs_amount}),'%')]]>
+			</if>
+			<if test="creator != null">
+				<![CDATA[AND CREATOR like CONCAT(CONCAT('%', #{creator}),'%')]]>
+			</if>
+			<if test="creator_id != null">
+				<![CDATA[AND CREATOR_ID like CONCAT(CONCAT('%', #{creator_id}),'%')]]>
+			</if>
+			<if test="create_org_info != null">
+				<![CDATA[AND CREATE_ORG_INFO like CONCAT(CONCAT('%', #{create_org_info}),'%')]]>
+			</if>
+			<if test="create_company != null">
+				<![CDATA[AND CREATE_COMPANY like CONCAT(CONCAT('%', #{create_company}),'%')]]>
+			</if>
+			<if test="create_company_id != null">
+				<![CDATA[AND CREATE_COMPANY_ID like CONCAT(CONCAT('%', #{create_company_id}),'%')]]>
+			</if>
+			<if test="create_departmet != null">
+				<![CDATA[AND CREATE_DEPARTMET like CONCAT(CONCAT('%', #{create_departmet}),'%')]]>
+			</if>
+			<if test="create_departmet_id != null">
+				<![CDATA[AND CREATE_DEPARTMET_ID like CONCAT(CONCAT('%', #{create_departmet_id}),'%')]]>
+			</if>
+			<if test="create_date != null">
+				<![CDATA[AND CREATE_DATE like CONCAT(CONCAT('%', #{create_date}),'%')]]>
+			</if>
+			<if test="modify_date != null">
+				<![CDATA[AND MODIFY_DATE like CONCAT(CONCAT('%', #{modify_date}),'%')]]>
+			</if>
+			<if test="modifyor != null">
+				<![CDATA[AND MODIFYOR like CONCAT(CONCAT('%', #{modifyor}),'%')]]>
+			</if>
+			<if test="contract_id != null">
+				<![CDATA[AND CONTRACT_ID like CONCAT(CONCAT('%', #{contract_id}),'%')]]>
+			</if>
+			<if test="contract_num != null">
+				<![CDATA[AND CONTRACT_NUM like CONCAT(CONCAT('%', #{contract_num}),'%')]]>
+			</if>
+			<if test="contract_name != null">
+				<![CDATA[AND CONTRACT_NAME like CONCAT(CONCAT('%', #{contract_name}),'%')]]>
+			</if>
+			<if test="mark != null">
+				<![CDATA[AND MARK like CONCAT(CONCAT('%', #{mark}),'%')]]>
+			</if>
+			<if test="data_type != null">
+				<![CDATA[AND DATA_TYPE like CONCAT(CONCAT('%', #{data_type}),'%')]]>
+			</if>
+			<if test="isupload != null">
+				<![CDATA[AND ISUPLOAD like CONCAT(CONCAT('%', #{isupload}),'%')]]>
+			</if>
+			<if test="flgdelete != null">
+				<![CDATA[AND FLGDELETE like CONCAT(CONCAT('%', #{flgdelete}),'%')]]>
+			</if>
+		 </trim> 
+	</select>
+    
+</mapper>

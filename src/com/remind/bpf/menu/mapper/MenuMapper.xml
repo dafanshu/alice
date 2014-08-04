@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.remind.bpf.menu.mapper.MenuMapper">
+	
+	<resultMap type="Menu" id="MenuResultMap">
+		 <id property="id" column="ID"/>
+ 		 <result property="parent_id" column="PARENT_ID"/>
+ 		 <result property="name" column="NAME"/>
+ 		 <result property="type" column="TYPE"/>
+ 		 <result property="seq" column="SEQ"/>
+ 		 <result property="event" column="EVENT"/>
+ 		 <result property="action" column="ACTION"/>
+ 		 <result property="created" column="CREATED"/>
+ 		 <result property="created_by" column="CREATED_BY"/>
+ 		 <result property="status" column="STATUS"/>
+ 		 <result property="last_upd" column="LAST_UPD"/>
+ 		 <result property="last_upd_by" column="LAST_UPD_BY"/>
+ 		 <result property="remarks" column="REMARKS"/>
+ 		 <collection property="subMenus"  column="id" ofType="Menu"  resultMap="sbuMenuResultMap"/>
+<!--  		 <collection property="subMenus" ofType="WM_MENU"  column="ID" select="querySubMenus"/> -->
+	</resultMap>
+	
+	<resultMap type="Menu" id="sbuMenuResultMap">
+		 <id property="id" column="SID"/>
+ 		 <result property="parent_id" column="SPARENT_ID"/>
+ 		 <result property="name" column="SNAME"/>
+ 		 <result property="type" column="TYPE"/>
+ 		 <result property="seq" column="SEQ"/>
+ 		 <result property="event" column="EVENT"/>
+ 		 <result property="action" column="SACTION"/>
+ 		 <result property="created" column="CREATED"/>
+ 		 <result property="created_by" column="CREATED_BY"/>
+ 		 <result property="status" column="STATUS"/>
+ 		 <result property="last_upd" column="LAST_UPD"/>
+ 		 <result property="last_upd_by" column="LAST_UPD_BY"/>
+ 		 <result property="remarks" column="REMARKS"/>
+ 		 <collection property="subMenus"  column="id" ofType="Menu"  resultMap="childMenuResultMap"/>
+	</resultMap>
+	
+	<resultMap type="Menu" id="childMenuResultMap">
+		 <id property="id" column="CID"/>
+ 		 <result property="parent_id" column="CPARENT_ID"/>
+ 		 <result property="name" column="CNAME"/>
+ 		 <result property="type" column="TYPE"/>
+ 		 <result property="seq" column="SEQ"/>
+ 		 <result property="event" column="EVENT"/>
+ 		 <result property="action" column="CACTION"/>
+ 		 <result property="created" column="CREATED"/>
+ 		 <result property="created_by" column="CREATED_BY"/>
+ 		 <result property="status" column="STATUS"/>
+ 		 <result property="last_upd" column="LAST_UPD"/>
+ 		 <result property="last_upd_by" column="LAST_UPD_BY"/>
+ 		 <result property="remarks" column="REMARKS"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="Menu">
+	 	<selectKey  keyProperty="id" resultType="long" order="BEFORE">
+			<![CDATA[select func_bpf_getseq('Menu') as id from dual]]>
+	   </selectKey>
+		<![CDATA[
+			INSERT INTO WM_MENU(ID, PARENT_ID, NAME, TYPE, SEQ, EVENT, ACTION, CREATED, CREATED_BY, STATUS, LAST_UPD, LAST_UPD_BY, REMARKS) 
+			VALUES( #{id,jdbcType=NUMERIC}, #{parent_id,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=NUMERIC}, #{seq,jdbcType=NUMERIC}, #{event,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR}, current_date, #{created_by,jdbcType=NUMERIC}, #{status,jdbcType=VARCHAR}, #{last_upd,jdbcType=DATE}, #{last_upd_by,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR} )
+		]]>
+	</insert>
+	
+	<delete id="delete" parameterType="Menu">
+		 delete from WM_MENU
+		 <trim prefix="where" prefixOverrides="AND |OR">  
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="parent_id != null">
+				AND PARENT_ID = #{parent_id}
+			</if>
+			<if test="name != null">
+				AND NAME = #{name}
+			</if>
+			<if test="type != null">
+				AND TYPE = #{type}
+			</if>
+			<if test="seq != null">
+				AND SEQ = #{seq}
+			</if>
+			<if test="event != null">
+				AND EVENT = #{event}
+			</if>
+			<if test="action != null">
+				AND ACTION = #{action}
+			</if>
+			<if test="created != null">
+				AND CREATED = #{created}
+			</if>
+			<if test="created_by != null">
+				AND CREATED_BY = #{created_by}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status}
+			</if>
+			<if test="last_upd != null">
+				AND LAST_UPD = #{last_upd}
+			</if>
+			<if test="last_upd_by != null">
+				AND LAST_UPD_BY = #{last_upd_by}
+			</if>
+			<if test="remarks != null">
+				AND REMARKS = #{remarks}
+			</if>
+		 </trim> 
+	</delete>
+	
+	<delete id="deleteById" parameterType="Long">
+		 delete from WM_MENU where id=#{id}  
+	</delete>
+		
+	<update id="updateAll" parameterType="Menu">
+		<![CDATA[ 
+			UPDATE WM_MENU SET LAST_UPD = current_date,
+			ID = #{id}, PARENT_ID = #{parent_id}, NAME = #{name}, TYPE = #{type}, SEQ = #{seq}, EVENT = #{event}, ACTION = #{action}, STATUS = #{status}, LAST_UPD_BY = #{last_upd_by}, REMARKS = #{remarks} 
+			WHERE 1 = 1
+		]]>
+	</update>
+	
+	<update id="updateNotNull" parameterType="Menu">
+		<![CDATA[ UPDATE MENU ]]>
+		<trim prefix="SET" suffixOverrides=",">
+				<if test="id != null">
+					ID = #{id}
+				</if>
+				<if test="parent_id != null">
+					PARENT_ID = #{parent_id}
+				</if>
+				<if test="name != null">
+					NAME = #{name}
+				</if>
+				<if test="type != null">
+					TYPE = #{type}
+				</if>
+				<if test="seq != null">
+					SEQ = #{seq}
+				</if>
+				<if test="event != null">
+					EVENT = #{event}
+				</if>
+				<if test="action != null">
+					ACTION = #{action}
+				</if>
+				<if test="created != null">
+					CREATED = #{created}
+				</if>
+				<if test="created_by != null">
+					CREATED_BY = #{created_by}
+				</if>
+				<if test="status != null">
+					STATUS = #{status}
+				</if>
+				<if test="last_upd_by != null">
+					LAST_UPD_BY = #{last_upd_by}
+				</if>
+				<if test="remarks != null">
+					REMARKS = #{remarks}
+				</if>
+		</trim>
+		<![CDATA[ WHERE 1 = 1 ]]>
+	</update>
+	
+	<select id="query" parameterType="Menu" resultMap="MenuResultMap">
+		select p.id,
+		p.Name,
+		p.parent_id,
+		p.action,
+		s.Id as sid,
+		s.Name as sname,
+		s.parent_id as sparent_id,
+		s.action as saction,
+		c.Id as cid,
+		c.Name as cname,
+		c.parent_id as cparent_id,
+		c.action as cation
+		from WM_MENU p
+		left outer join WM_MENU s
+		on p.Id = s.Parent_Id
+		left outer join WM_MENU c
+		on s.id = c.parent_id
+		where p.parent_id = #{parent_id}
+		and p.type = #{type} order by p.seq,s.seq,c.seq
+	</select>
+	
+	<select id="querySubMenus" parameterType="int"  resultType="Menu">
+		select id,name from WM_MENU where parent_id=#{id}
+	</select>
+	
+	<select id="queryMenu" resultMap="MenuResultMap" parameterType="Menu">
+		<![CDATA[ SELECT ID, PARENT_ID, NAME, TYPE, SEQ, EVENT, ACTION, CREATED, CREATED_BY, STATUS, LAST_UPD, LAST_UPD_BY, REMARKS FROM MENU]]>
+		 <trim prefix="where" prefixOverrides="AND |OR">  
+			<if test="id != null">
+				<![CDATA[AND ID like CONCAT(CONCAT('%', #{id}),'%')]]>
+			</if>
+			<if test="parent_id != null">
+				<![CDATA[AND PARENT_ID like CONCAT(CONCAT('%', #{parent_id}),'%')]]>
+			</if>
+			<if test="name != null">
+				<![CDATA[AND NAME like CONCAT(CONCAT('%', #{name}),'%')]]>
+			</if>
+			<if test="type != null">
+				<![CDATA[AND TYPE like CONCAT(CONCAT('%', #{type}),'%')]]>
+			</if>
+			<if test="seq != null">
+				<![CDATA[AND SEQ like CONCAT(CONCAT('%', #{seq}),'%')]]>
+			</if>
+			<if test="event != null">
+				<![CDATA[AND EVENT like CONCAT(CONCAT('%', #{event}),'%')]]>
+			</if>
+			<if test="action != null">
+				<![CDATA[AND ACTION like CONCAT(CONCAT('%', #{action}),'%')]]>
+			</if>
+			<if test="created != null">
+				<![CDATA[AND CREATED like CONCAT(CONCAT('%', #{created}),'%')]]>
+			</if>
+			<if test="created_by != null">
+				<![CDATA[AND CREATED_BY like CONCAT(CONCAT('%', #{created_by}),'%')]]>
+			</if>
+			<if test="status != null">
+				<![CDATA[AND STATUS like CONCAT(CONCAT('%', #{status}),'%')]]>
+			</if>
+			<if test="last_upd != null">
+				<![CDATA[AND LAST_UPD like CONCAT(CONCAT('%', #{last_upd}),'%')]]>
+			</if>
+			<if test="last_upd_by != null">
+				<![CDATA[AND LAST_UPD_BY like CONCAT(CONCAT('%', #{last_upd_by}),'%')]]>
+			</if>
+			<if test="remarks != null">
+				<![CDATA[AND REMARKS like CONCAT(CONCAT('%', #{remarks}),'%')]]>
+			</if>
+		 </trim> 
+	</select>
+    
+</mapper>

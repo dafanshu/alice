@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.remind.bpf.role.mapper.UserRoleMapper">
+	
+	<resultMap type="UserRole" id="UserRoleResultMap">
+		 <id property="id" column="ID"/>
+ 		 <result property="name" column="NAME"/>
+ 		 <result property="type" column="TYPE"/>
+ 		 <result property="created" column="CREATED"/>
+ 		 <result property="created_by" column="CREATED_BY"/>
+ 		 <result property="status" column="STATUS"/>
+ 		 <result property="last_upd" column="LAST_UPD"/>
+ 		 <result property="last_upd_by" column="LAST_UPD_BY"/>
+ 		 <result property="remarks" column="REMARKS"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="UserRole">
+	 	<selectKey  keyProperty="id" resultType="long" order="BEFORE">
+			<![CDATA[select func_bpf_getseq('WM_ROLE') as id from dual]]>
+	   </selectKey>
+		<![CDATA[
+			INSERT INTO WM_ROLE(ID, NAME, TYPE, CREATED, CREATED_BY, STATUS, LAST_UPD, LAST_UPD_BY, REMARKS) 
+			VALUES( #{id,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=NUMERIC}, current_date, #{created_by,jdbcType=NUMERIC}, #{status,jdbcType=VARCHAR}, #{last_upd,jdbcType=DATE}, #{last_upd_by,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR} )
+		]]>
+	</insert>
+	
+	<delete id="delete" parameterType="UserRole">
+		 delete from WM_ROLE
+		 <trim prefix="where" prefixOverrides="AND |OR">  
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="name != null">
+				AND NAME = #{name}
+			</if>
+			<if test="type != null">
+				AND TYPE = #{type}
+			</if>
+			<if test="created != null">
+				AND CREATED = #{created}
+			</if>
+			<if test="created_by != null">
+				AND CREATED_BY = #{created_by}
+			</if>
+			<if test="status != null">
+				AND STATUS = #{status}
+			</if>
+			<if test="last_upd != null">
+				AND LAST_UPD = #{last_upd}
+			</if>
+			<if test="last_upd_by != null">
+				AND LAST_UPD_BY = #{last_upd_by}
+			</if>
+			<if test="remarks != null">
+				AND REMARKS = #{remarks}
+			</if>
+		 </trim> 
+	</delete>
+	
+	<delete id="deleteById" parameterType="Long">
+		 delete from WM_ROLE where id=#{id}  
+	</delete>
+		
+	<update id="updateAll" parameterType="UserRole">
+		<![CDATA[ 
+			UPDATE WM_ROLE SET LAST_UPD = current_date,
+			ID = #{id}, NAME = #{name}, TYPE = #{type}, STATUS = #{status}, LAST_UPD_BY = #{last_upd_by}, REMARKS = #{remarks} 
+			WHERE 1 = 1
+		]]>
+	</update>
+	
+	<update id="updateNotNull" parameterType="UserRole">
+		<![CDATA[ UPDATE WM_ROLE ]]>
+		<trim prefix="SET" suffixOverrides=",">
+				<if test="id != null">
+					ID = #{id}
+				</if>
+				<if test="name != null">
+					NAME = #{name}
+				</if>
+				<if test="type != null">
+					TYPE = #{type}
+				</if>
+				<if test="created != null">
+					CREATED = #{created}
+				</if>
+				<if test="created_by != null">
+					CREATED_BY = #{created_by}
+				</if>
+				<if test="status != null">
+					STATUS = #{status}
+				</if>
+				<if test="last_upd_by != null">
+					LAST_UPD_BY = #{last_upd_by}
+				</if>
+				<if test="remarks != null">
+					REMARKS = #{remarks}
+				</if>
+		</trim>
+		<![CDATA[ WHERE 1 = 1 ]]>
+	</update>
+	
+	
+	<select id="query" resultMap="UserRoleResultMap" parameterType="UserRole">
+		<![CDATA[ SELECT ID, NAME, TYPE, CREATED, CREATED_BY, STATUS, LAST_UPD, LAST_UPD_BY, REMARKS FROM WM_ROLE]]>
+		 <trim prefix="where" prefixOverrides="AND |OR">  
+			<if test="id != null">
+				<![CDATA[AND ID like CONCAT(CONCAT('%', #{id}),'%')]]>
+			</if>
+			<if test="name != null">
+				<![CDATA[AND NAME like CONCAT(CONCAT('%', #{name}),'%')]]>
+			</if>
+			<if test="type != null">
+				<![CDATA[AND TYPE like CONCAT(CONCAT('%', #{type}),'%')]]>
+			</if>
+			<if test="created != null">
+				<![CDATA[AND CREATED like CONCAT(CONCAT('%', #{created}),'%')]]>
+			</if>
+			<if test="created_by != null">
+				<![CDATA[AND CREATED_BY like CONCAT(CONCAT('%', #{created_by}),'%')]]>
+			</if>
+			<if test="status != null">
+				<![CDATA[AND STATUS like CONCAT(CONCAT('%', #{status}),'%')]]>
+			</if>
+			<if test="last_upd != null">
+				<![CDATA[AND LAST_UPD like CONCAT(CONCAT('%', #{last_upd}),'%')]]>
+			</if>
+			<if test="last_upd_by != null">
+				<![CDATA[AND LAST_UPD_BY like CONCAT(CONCAT('%', #{last_upd_by}),'%')]]>
+			</if>
+			<if test="remarks != null">
+				<![CDATA[AND REMARKS like CONCAT(CONCAT('%', #{remarks}),'%')]]>
+			</if>
+		 </trim> 
+	</select>
+    
+</mapper>
